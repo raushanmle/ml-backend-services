@@ -1,0 +1,32 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-db-services
+    ports:
+      - "6500:5432"
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-services
+    ports:
+      - '8000:8000'
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+    entrypoint: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+
+volumes:
+  postgres-db:
