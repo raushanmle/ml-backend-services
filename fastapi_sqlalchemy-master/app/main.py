@@ -1,11 +1,7 @@
-import sys
-sys.path.append(".")
 from app import models, note
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine
-
-from app.database import initialize_database
+from app.database import engine, initialize_database
 
 # Initialize the database
 initialize_database()

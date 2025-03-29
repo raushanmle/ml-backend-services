@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres-db:/var/lib/postgresql/data
 
-  fastapi:
+  fastapi-postgres-project:
     build:
       context: .
       dockerfile: Dockerfile

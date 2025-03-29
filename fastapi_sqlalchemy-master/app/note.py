@@ -1,7 +1,7 @@
-from . import schemas, models
+from app import schemas, models
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status, APIRouter, Response
-from .database import get_db
+from app.database import get_db
 
 router = APIRouter()
 
@@ -59,3 +59,7 @@ def delete_post(noteId: str, db: Session = Depends(get_db)):
     note_query.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run("note:router", host="0.0.0.0", port=8000, reload=True)
