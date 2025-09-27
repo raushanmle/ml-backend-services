@@ -1,0 +1,69 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Celery Worker",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "celery",
+            "args": [
+                "-A",
+                "tasks",
+                "worker",
+                "-l",
+                "DEBUG",
+                "-Q",
+                "tasks.run_celery,tasks.run_celery-queue",
+                "-c",
+                "1",
+                "--prefetch-multiplier",
+                "1"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Debug Celery Worker (Single Threaded)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "celery",
+            "args": [
+                "-A",
+                "tasks",
+                "worker",
+                "-l",
+                "DEBUG",
+                "-Q",
+                "tasks.run_celery,tasks.run_celery-queue",
+                "-c",
+                "1",
+                "--prefetch-multiplier",
+                "1",
+                "--without-heartbeat",
+                "--without-gossip",
+                "--without-mingle"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Send Test Task",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/send_task.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    ]
+}
