@@ -1,3 +1,5 @@
 python-dotenv
 celery
 redis
+pyodbc
+sqlalchemy

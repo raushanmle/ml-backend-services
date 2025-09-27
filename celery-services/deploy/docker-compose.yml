@@ -9,7 +9,6 @@ services:
     volumes:
       - ../app:/app/app
       - ../manage.sh:/app/manage.sh
-      - ../celery_worker:/app/celery_worker
       - ../celery_config.py:/app/celery_config.py
       - ../celery_app.py:/app/celery_app.py
       - ../tasks.py:/app/tasks.py
@@ -21,6 +20,11 @@ services:
       - RABBITMQ_PORT=5672
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MSSQL_HOST=mssqlserver
+      - MSSQL_PORT=1433
+      - MSSQL_DATABASE=master
+      - MSSQL_USER=sa
+      - MSSQL_PASSWORD=YourStrong@Passw0rd
       - AZURE_BLOB_CONTAINER=experiments
       - AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
       - AZURE_IMAGE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
@@ -30,6 +34,7 @@ services:
       - rabbitmq
       - redis
       - azurite
+      - mssqlserver
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -54,3 +59,12 @@ services:
     command: azurite-blob --blobHost 0.0.0.0 --blobPort 10000
     ports:
       - 10000:10000
+    
+  mssqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "YourStrong@Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1433:1433
